@@ -1,0 +1,67 @@
+选择在Linux下安装redis，现在采用虚拟机安装的centos7 进行安装的
+
+1.安装gcc  redis是c语言编写的
+
+      yum install gcc-c++
+
+2.下载redis安装包,在root目录下执行
+
+    wget http://download.redis.io/releases/redis-5.0.4.tar.gz
+
+3.解压redis安装包
+
+   tar -zxvf redis-5.0.4.tar.gz
+
+4.进入redis目录
+
+   cd redis-5.0.4
+
+5.编译
+
+   make
+
+6.安装
+
+   make PREFIX=/usr/local/redis install
+
+7.拷贝redis.conf到安装目录
+
+   cp redis.conf /usr/local/redis
+
+8.进入 /usr/local/redis目录
+
+   cd /usr/local/redis/
+
+9.编辑redis.conf   
+
+    vim redis.conf
+
+    1.后台启动，daemonize yes
+
+    2.绑定端口，port 6379 默认是6379 需要安全组开放端口
+
+    3.绑定IP，bind 192.168.2.128
+
+    4.指定数据存放路径，dir /usr/local/redis/log rdb存放的路径
+
+    5.指定持久化方式，appendonly yes
+
+    6.requirepass redis129 设置密码
+
+ 10.后端启动redis：
+
+     ./bin/redis-server ./redis.conf
+
+11.查看是否启动成功：
+
+     ps aux | grep redis
+
+12.进入客户端
+
+     ./bin/redis-cli --raw 处理中文乱码问题
+
+14.关闭redis进程
+
+    1.  ./bin/redis-cli shutdown
+
+    2. kill -9 pid 进程
